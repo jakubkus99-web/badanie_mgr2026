@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Badanie psychologiczne</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #FAF9F6;
+  --surface: #FFFFFF;
+  --text: #2C2C2C;
+  --text-secondary: #6B6B6B;
+  --accent: #3D5A80;
+  --accent-hover: #2E4A6E;
+  --border: #E0DDD8;
+  --error: #C1444B;
+  --success: #3A7D5C;
+  --radius: 10px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* iOS touch fixes */
+label, button, input[type="checkbox"], input[type="radio"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* ── Progress bar ── */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--border);
+  z-index: 100;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+/* ── Sections ── */
+.section {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+.section.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Typography ── */
+h1 {
+  font-family: 'Source Serif 4', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+h2 {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  margin-bottom: 32px;
+  line-height: 1.7;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+/* ── Questionnaire items ── */
+.q-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+.q-item.answered { border-color: var(--accent); }
+.q-item.error { border-color: var(--error); }
+
+.q-text {
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+.q-number {
+  color: var(--accent);
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+/* ── Likert scale ── */
+.likert {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.likert label {
+  flex: 1;
+  min-width: 42px;
+  text-align: center;
+  cursor: pointer;
+}
+.likert input { display: none; }
+.likert .btn-likert {
+  display: block;
+  padding: 8px 4px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.15s;
+  color: var(--text-secondary);
+  background: transparent;
+}
+.likert input:checked + .btn-likert {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+.likert label:hover .btn-likert {
+  border-color: var(--accent);
+}
+
+/* ── Scale labels ── */
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ── Yes/No ── */
+.yn-group {
+  display: flex;
+  gap: 12px;
+}
+.yn-group label {
+  flex: 1;
+  cursor: pointer;
+}
+.yn-group input { display: none; }
+.yn-btn {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+.yn-group input:checked + .yn-btn {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+.yn-group label:hover .yn-btn { border-color: var(--accent); }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.btn-primary:disabled {
+  background: var(--border);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+  transform: none;
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+.btn-secondary:hover { background: rgba(61,90,128,0.06); }
+
+.btn-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* ── Coin flip ── */
+.coin-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  border-radius: var(--radius);
+  position: relative;
+  min-height: 380px;
+  transition: background 0.3s;
+}
+
+.coin-area.neutral-bg {
+  background: linear-gradient(135deg, #f0eeeb 0%, #e8e5e0 100%);
+}
+
+.coin-area.eyes-bg {
+  background: linear-gradient(135deg, #f0eeeb 0%, #e8e5e0 100%);
+  position: relative;
+}
+
+.eyes-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: var(--radius);
+  opacity: 0.08;
+}
+
+.eye-svg {
+  position: absolute;
+}
+
+.coin-container {
+  width: 140px;
+  height: 140px;
+  perspective: 600px;
+  margin-bottom: 24px;
+}
+
+.coin {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.1s;
+}
+
+.coin.flipping {
+  animation: coinFlip 1.2s ease-out forwards;
+}
+.coin.flipping-tails {
+  animation: coinFlipTails 1.2s ease-out forwards;
+}
+
+@keyframes coinFlip {
+  0% { transform: rotateX(0deg) translateY(0); }
+  30% { transform: rotateX(900deg) translateY(-80px); }
+  70% { transform: rotateX(1620deg) translateY(-20px); }
+  100% { transform: rotateX(1800deg) translateY(0); }
+}
+@keyframes coinFlipTails {
+  0% { transform: rotateX(0deg) translateY(0); }
+  30% { transform: rotateX(900deg) translateY(-80px); }
+  70% { transform: rotateX(1620deg) translateY(-20px); }
+  100% { transform: rotateX(1980deg) translateY(0); }
+}
+
+.coin-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: 'Source Serif 4', serif;
+  backface-visibility: hidden;
+  border: 4px solid rgba(0,0,0,0.1);
+}
+
+.coin-heads {
+  background: linear-gradient(145deg, #FFD700, #DAA520);
+  color: #7B5B00;
+}
+.coin-tails {
+  background: linear-gradient(145deg, #C0C0C0, #A0A0A0);
+  color: #4A4A4A;
+  transform: rotateX(180deg);
+}
+
+.coin-result-text {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.coin-result-text.visible { opacity: 1; }
+
+/* ── Error message (fake) ── */
+.error-box {
+  background: #FFF5F5;
+  border: 1px solid #FECACA;
+  border-left: 4px solid var(--error);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 460px;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.error-box.visible { opacity: 1; }
+.error-box strong { color: var(--error); }
+
+.reflip-btn {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  padding: 8px 20px;
+}
+
+/* ── Thank you ── */
+.thank-you-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+/* ── Validation ── */
+.validation-msg {
+  color: var(--error);
+  font-size: 0.85rem;
+  margin-top: 8px;
+  display: none;
+}
+.validation-msg.show { display: block; }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.2rem; }
+  .container { padding: 24px 16px 60px; }
+  .card { padding: 20px 16px; }
+  .q-item { padding: 16px; }
+  .likert { gap: 4px; }
+  .likert .btn-likert { padding: 6px 2px; font-size: 0.8rem; }
+}
+
+/* ── Loading ── */
+.spinner {
+  width: 28px; height: 28px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.sending-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(250,249,246,0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  display: none;
+}
+.sending-overlay.active { display: flex; }
+
+/* ── Mobile block ── */
+.mobile-block {
+  display: none;
+  text-align: center;
+  padding: 60px 20px;
+}
+.mobile-block .thank-you-icon { color: var(--error); }
+.mobile-block.active { display: block; }
+
+/* ── Demographics ── */
+.demo-field {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 12px;
+}
+.demo-field label.field-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+.demo-field input[type="number"],
+.demo-field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 0.15s;
+}
+.demo-field input[type="number"]:focus,
+.demo-field select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.demo-field.error { border-color: var(--error); }
+
+/* ── Debriefing ── */
+.debrief-text h3 {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 18px 0 10px;
+  color: var(--accent);
+}
+.debrief-text h3:first-child { margin-top: 0; }
+.debrief-text p { margin-bottom: 12px; font-size: 0.95rem; }
+.debrief-text ul { margin: 0 0 14px 20px; }
+.debrief-text li { margin-bottom: 8px; font-size: 0.95rem; line-height: 1.55; }
+.contact-box {
+  background: #F2F5F9;
+  border-left: 4px solid var(--accent);
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin-top: 16px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+.participant-id-box {
+  background: #FAF8F2;
+  border: 1px dashed var(--border);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  word-break: break-all;
+}
+.btn-row.split { justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.btn-danger {
+  background: transparent;
+  color: var(--error);
+  border: 2px solid var(--error);
+}
+.btn-danger:hover { background: rgba(193,68,75,0.06); }
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="container">
+
+  <!-- ════════ MOBILE BLOCK ════════ -->
+  <div class="mobile-block" id="sec-mobile-block">
+    <div class="thank-you-icon">⚠</div>
+    <h1>Badanie niedostępne na tym urządzeniu</h1>
+    <p class="subtitle" style="max-width:480px;margin:16px auto 0;">
+      To badanie wymaga komputera stacjonarnego lub laptopa. Procedura nie wyświetla się poprawnie
+      na urządzeniach mobilnych i tabletach.<br><br>
+      Prosimy o&nbsp;otwarcie linku ponownie na komputerze. Dziękujemy za wyrozumiałość.
+    </p>
+  </div>
+
+  <!-- ════════ 0. WELCOME ════════ -->
+  <div class="section active" id="sec-welcome">
+    <h1>Badanie psychologiczne</h1>
+    <p class="subtitle">
+      Dziękujemy za zainteresowanie udziałem w naszym badaniu. Przed Tobą kilka krótkich kwestionariuszy 
+      oraz proste zadanie. Całość zajmie ok. <strong>8–10 minut</strong>.<br><br>
+      <strong>Badanie można wykonać wyłącznie na komputerze stacjonarnym lub laptopie.</strong><br><br>
+      Twoje odpowiedzi są w pełni anonimowe. Nie ma dobrych ani złych odpowiedzi — odpowiadaj zgodnie 
+      z pierwszą myślą, która przyjdzie Ci do głowy. Możesz zrezygnować z&nbsp;udziału w&nbsp;badaniu w&nbsp;każdej chwili.
+    </p>
+    <div class="card">
+      <p style="margin-bottom:16px;font-weight:500;">Aby kontynuować, potwierdź poniższe:</p>
+      <label style="display:flex;gap:10px;cursor:pointer;align-items:flex-start;">
+        <input type="checkbox" id="consent" style="margin-top:4px;width:18px;height:18px;accent-color:var(--accent);-webkit-appearance:checkbox;">
+        <span style="font-size:0.95rem;line-height:1.5;">Wyrażam dobrowolną zgodę na udział w badaniu. Rozumiem, że moje odpowiedzi są anonimowe i mogę w każdej chwili przerwać badanie.</span>
+      </label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btnStart" disabled onclick="goTo('sec-tipi')">Rozpocznij badanie</button>
+    </div>
+  </div>
+
+  <!-- ════════ 1. TIPI-PL ════════ -->
+  <div class="section" id="sec-tipi">
+    <h2>Część 1 — Jak siebie postrzegasz?</h2>
+    <p class="subtitle">
+      Poniżej znajduje się lista cech. Oceń, w jakim stopniu każde stwierdzenie odnosi się do Ciebie.<br>
+      <em>Spostrzegam siebie jako osobę…</em>
+    </p>
+    <div class="scale-labels"><span>1 — Zdecydowanie się nie zgadzam</span><span>7 — Zdecydowanie się zgadzam</span></div>
+    <div id="tipi-items"></div>
+    <div class="validation-msg" id="tipi-val">Proszę odpowiedzieć na wszystkie pytania.</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="validateAndGo('tipi','sec-coin')">Dalej</button>
+    </div>
+  </div>
+
+  <!-- ════════ 2. COIN FLIP ════════ -->
+  <div class="section" id="sec-coin">
+    <h2>Część 2 — Zadanie z monetą</h2>
+    <p class="subtitle">
+      W tym zadaniu przerzucisz wirtualną monetę. Wynik rzutu jest losowy.<br>
+      Najpierw wybierz stronę, a następnie rzuć monetą.
+    </p>
+
+    <!-- Step 1: Choose side -->
+    <div class="card" id="coinChoiceCard">
+      <p style="font-weight:500;margin-bottom:16px;">Wybierz stronę monety:</p>
+      <div class="yn-group">
+        <label><input type="radio" name="coin_choice" value="orzeł" onchange="enableFlip()"><span class="yn-btn">Orzeł</span></label>
+        <label><input type="radio" name="coin_choice" value="reszka" onchange="enableFlip()"><span class="yn-btn">Reszka</span></label>
+      </div>
+    </div>
+
+    <!-- Step 2: Flip area -->
+    <div class="coin-area" id="coinArea">
+      <!-- Eyes overlay (only for eyes group) -->
+      <div class="eyes-overlay" id="eyesOverlay" style="display:none;"></div>
+
+      <div class="coin-container">
+        <div class="coin" id="coin">
+          <div class="coin-face coin-heads">O</div>
+          <div class="coin-face coin-tails">R</div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="btnFlip" onclick="flipCoin()" disabled style="opacity:0.5;">Rzuć monetą</button>
+
+      <div class="coin-result-text" id="coinResultText"></div>
+
+      <div class="error-box" id="errorBox">
+        <strong>⚠ Uwaga — wykryto błąd techniczny:</strong><br>
+        System zezwala na ponowny rzut monetą. Jest to niezamierzony błąd w procedurze badania.
+        <strong>Prosimy o niewykorzystywanie tego błędu</strong> i zaakceptowanie wyniku pierwszego rzutu.
+        <br><br>
+        <button class="btn btn-secondary reflip-btn" id="btnReflip" onclick="flipCoin()">Przerzuć monetę</button>
+        <button class="btn btn-primary reflip-btn" id="btnAccept" onclick="acceptCoin()" style="margin-left:8px;">Akceptuję wynik</button>
+      </div>
+    </div>
+
+    <div class="btn-row" id="coinNext" style="display:none;">
+      <button class="btn btn-primary" onclick="goTo('sec-sd3')">Dalej</button>
+    </div>
+  </div>
+
+  <!-- ════════ 3. SD3-PL ════════ -->
+  <div class="section" id="sec-sd3">
+    <h2>Część 3 — Twoje przekonania</h2>
+    <p class="subtitle">
+      Określ swoją zgodę lub niezgodę z każdym stwierdzeniem, używając poniższej skali.
+    </p>
+    <div class="scale-labels"><span>1 — Zdecydowanie się nie zgadzam</span><span>5 — Zdecydowanie się zgadzam</span></div>
+    <div id="sd3-items"></div>
+    <div class="validation-msg" id="sd3-val">Proszę odpowiedzieć na wszystkie pytania.</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="validateAndGo('sd3','sec-extra')">Dalej</button>
+    </div>
+  </div>
+
+  <!-- ════════ 4 & 5. EXTRA ITEMS ════════ -->
+  <div class="section" id="sec-extra">
+    <h2>Część 4 — Ostatnie pytania</h2>
+
+    <div class="q-item" id="q-dishonesty">
+      <p class="q-text">Uważam się za osobę nieuczciwą.</p>
+      <div class="scale-labels"><span>1 — Zdecydowanie się nie zgadzam</span><span>5 — Zdecydowanie się zgadzam</span></div>
+      <div class="likert" id="likert-dishonesty"></div>
+    </div>
+
+    <div class="q-item" id="q-lying" style="margin-top:20px;">
+      <p class="q-text">Inni ludzie kłamią częściej niż ja.</p>
+      <div class="yn-group">
+        <label><input type="radio" name="lying" value="tak"><span class="yn-btn">Tak</span></label>
+        <label><input type="radio" name="lying" value="nie"><span class="yn-btn">Nie</span></label>
+      </div>
+    </div>
+
+    <div class="validation-msg" id="extra-val">Proszę odpowiedzieć na wszystkie pytania.</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="validateExtraAndGo()">Dalej</button>
+    </div>
+  </div>
+
+  <!-- ════════ 5. DEMOGRAPHICS ════════ -->
+  <div class="section" id="sec-demo">
+    <h2>Część 5 — Krótka metryczka</h2>
+    <p class="subtitle">
+      Na koniec poprosimy o kilka podstawowych informacji. Dane te są wykorzystywane wyłącznie do opisu próby.
+    </p>
+
+    <div class="demo-field" id="demo-age">
+      <label class="field-label" for="age">Wiek (w latach)</label>
+      <input type="number" id="age" min="18" max="100" step="1" placeholder="np. 24" inputmode="numeric">
+    </div>
+
+    <div class="demo-field" id="demo-gender">
+      <label class="field-label" for="gender">Płeć</label>
+      <select id="gender">
+        <option value="">— wybierz —</option>
+        <option value="kobieta">Kobieta</option>
+        <option value="mężczyzna">Mężczyzna</option>
+        <option value="inna">Inna / niebinarna</option>
+        <option value="brak_odp">Wolę nie podawać</option>
+      </select>
+    </div>
+
+    <div class="demo-field" id="demo-edu">
+      <label class="field-label" for="education">Najwyższe ukończone wykształcenie</label>
+      <select id="education">
+        <option value="">— wybierz —</option>
+        <option value="podstawowe">Podstawowe</option>
+        <option value="zawodowe">Zawodowe</option>
+        <option value="średnie">Średnie</option>
+        <option value="licencjat">Wyższe — licencjat / inżynier</option>
+        <option value="magister">Wyższe — magister</option>
+        <option value="doktorat">Doktorat lub wyżej</option>
+      </select>
+    </div>
+
+    <div class="validation-msg" id="demo-val">Proszę wypełnić wszystkie pola (wiek 18–100).</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="validateDemoAndGo()">Dalej</button>
+    </div>
+  </div>
+
+  <!-- ════════ 6. DEBRIEFING (przed wysłaniem danych) ════════ -->
+  <div class="section" id="sec-debrief">
+    <h2>Wyjaśnienie procedury badania</h2>
+    <p class="subtitle">
+      Zanim Twoje odpowiedzi zostaną zapisane, prosimy o zapoznanie się z poniższymi informacjami.
+      Po przeczytaniu zdecyduj, czy zgadzasz się na wykorzystanie swoich danych.
+    </p>
+
+    <div class="card">
+      <div class="debrief-text">
+        <h3>Czego naprawdę dotyczyło badanie</h3>
+        <p>
+          Celem badania jest sprawdzenie, w jakich okolicznościach ludzie skłonni są do drobnej
+          nieuczciwości oraz jak wpływają na to subtelne sygnały społeczne związane z poczuciem
+          bycia obserwowanym. Interesuje nas również związek między cechami osobowości
+          (Wielka Piątka, Mroczna Triada) a podatnością na pokusę nieuczciwego zachowania.
+        </p>
+
+        <h3>Elementy procedury, których nie ujawniliśmy wcześniej</h3>
+        <ul>
+          <li>
+            <strong>Pierwszy rzut monetą był ustawiony.</strong> Został zaprogramowany tak,
+            aby zawsze pokazać wynik <em>przeciwny</em> do Twojego wyboru. Kolejne rzuty
+            (jeśli zdecydowałeś/zdecydowałaś się na nie) były już prawdziwie losowe.
+          </li>
+          <li>
+            <strong>"Błąd techniczny" był pozorny.</strong> Komunikat o błędzie i przycisk
+            "Przerzuć monetę" były celową częścią procedury, a&nbsp;nie usterką. Twoja decyzja —
+            przyjąć pierwszy wynik czy spróbować przerzucić — jest właśnie tym, co badamy.
+          </li>
+          <li>
+            <strong>Losowy podział na dwie grupy.</strong> Tło ekranu z monetą miało dwie wersje —
+            neutralną oraz z subtelnym wzorem oczu w tle. Sprawdzaliśmy, czy obecność sygnału
+            "bycia obserwowanym" wpływa na zachowania uczestników.
+          </li>
+        </ul>
+
+        <h3>Dlaczego nie powiedzieliśmy o tym wcześniej</h3>
+        <p>
+          Pełne ujawnienie procedury przed badaniem uniemożliwiłoby uzyskanie naturalnej reakcji
+          uczestników. Tego rodzaju zwodzenie (<em>deception</em>) jest dopuszczalne w&nbsp;badaniach
+          psychologicznych pod warunkiem, że nie naraża uczestników na szkodę i jest wyjaśniane
+          w&nbsp;debriefingu — co właśnie robimy.
+        </p>
+        <p>
+          Niezależnie od tego, jak postąpiłeś/postąpiłaś w zadaniu z monetą — <strong>żadna decyzja
+          nie była dobra ani zła</strong>. Każdy wynik jest dla nas wartościowy i pozwala lepiej
+          zrozumieć ludzkie decyzje w&nbsp;tego typu sytuacjach.
+        </p>
+
+        <h3>Twoje prawa</h3>
+        <p>
+          Twoje odpowiedzi są w pełni anonimowe — nie zbieramy żadnych danych pozwalających na Twoją
+          identyfikację. Po zapoznaniu się z powyższymi informacjami możesz:
+        </p>
+        <ul>
+          <li><strong>Zgodzić się na wykorzystanie swoich danych</strong> — Twoje odpowiedzi zostaną zapisane i wykorzystane w&nbsp;analizach naukowych.</li>
+          <li><strong>Wycofać swoje dane</strong> — Twoje odpowiedzi nie zostaną zapisane ani wykorzystane.</li>
+        </ul>
+
+        <div class="contact-box">
+          <strong>Kontakt:</strong> W razie pytań dotyczących badania możesz skontaktować się
+          z osobą prowadzącą: dr Jakub Kuś, Wydział Psychologii, Uniwersytet SWPS we Wrocławiu —
+          <a href="mailto:jkus@swps.edu.pl">jkus@swps.edu.pl</a>.<br><br>
+          Jeśli udział w&nbsp;badaniu wzbudził w&nbsp;Tobie jakikolwiek dyskomfort, zachęcamy do kontaktu
+          z&nbsp;osobą prowadzącą lub skorzystania z konsultacji psychologicznej dostępnej w&nbsp;Twojej
+          instytucji.
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row split">
+      <button class="btn btn-danger" onclick="withdrawData()">Wycofuję swoje dane</button>
+      <button class="btn btn-primary" onclick="submitAll()">Zgadzam się — wyślij dane</button>
+    </div>
+  </div>
+
+  <!-- ════════ THANK YOU ════════ -->
+  <div class="section" id="sec-thanks">
+    <div style="text-align:center;padding:60px 0;">
+      <div class="thank-you-icon" id="thanksIcon">✓</div>
+      <h1 id="thanksTitle">Dziękujemy za udział!</h1>
+      <p class="subtitle" style="max-width:520px;margin:16px auto 0;" id="thanksText">
+        Twoje odpowiedzi zostały zapisane. Możesz zamknąć tę stronę.
+      </p>
+      <p style="max-width:520px;margin:8px auto 0;font-size:0.88rem;color:var(--text-secondary);">
+        W razie pytań dotyczących badania skontaktuj się z&nbsp;osobą prowadzącą:
+        dr Jakub Kuś — <a href="mailto:jkus@swps.edu.pl">jkus@swps.edu.pl</a>.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Sending overlay -->
+<div class="sending-overlay" id="sendingOverlay">
+  <div class="spinner"></div>
+  <p style="font-weight:500;">Zapisywanie odpowiedzi…</p>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+//  CONFIG
+//  ⚠ PRZED WDROŻENIEM: wklej URL Twojego Google Apps Script Web App.
+//  Bez tego dane będą tylko logowane w konsoli przeglądarki (FALLBACK).
+// ══════════════════════════════════════════════
+const SCRIPT_URL = ''; // ← np. 'https://script.google.com/macros/s/AKfycbxU2R2thlkcUTbo8L8MzZQ4QLrB92_TdsUgf6RKpVFrnmurzHLW87RUh1EwSvxdExvC/exec'
+
+// ══════════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════════
+const TIPI_ITEMS = [
+  'Lubiącą towarzystwo innych, aktywną i optymistyczną.',
+  'Krytyczną względem innych, konfliktową.',
+  'Sumienną, zdyscyplinowaną.',
+  'Pełną niepokoju, łatwo wpadającą w przygnębienie.',
+  'Otwartą na nowe doznania, w złożony sposób postrzegającą świat.',
+  'Zamkniętą w sobie, wycofaną i cichą.',
+  'Zgodną, życzliwą.',
+  'Źle zorganizowaną, niedbałą.',
+  'Niemartwiącą się, stabilną emocjonalnie.',
+  'Trzymającą się utartych schematów, biorącą rzeczy wprost.'
+];
+
+const SD3_ITEMS = [
+  'Ujawnianie swoich sekretów jest niemądre.',
+  'Ludzie postrzegają mnie jako naturalnego przywódcę.',
+  'Lubię mścić się na ludziach, którzy sprawują władzę.',
+  'Lubię stosować zręczną manipulację, aby osiągnąć to, co chcę.',
+  'Nienawidzę być w centrum uwagi.',
+  'Zemsta musi nastąpić szybko i być dotkliwa.',
+  'Za wszelką cenę muszę mieć wpływowych ludzi po swojej stronie.',
+  'Wiele zajęć grupowych jest zazwyczaj nudnych beze mnie.',
+  'Unikam niebezpiecznych sytuacji.',
+  'Należy unikać bezpośrednich konfliktów z innymi ludźmi, ponieważ mogą okazać się oni przydatni w przyszłości.',
+  'Wiem, że jestem wyjątkowy, bo wszyscy mi o tym mówią.',
+  'Ludzie często mówią, że tracę panowanie nad sobą.',
+  'Warto jest zbierać informacje, których można będzie kiedyś użyć przeciwko innym ludziom.',
+  'Lubię nawiązywać znajomości z ważnymi ludźmi.',
+  'To prawda, że potrafię być podły dla innych.',
+  'Trzeba czekać na odpowiedni moment, aby odegrać się na innych.',
+  'Czuję się zawstydzony, kiedy ktoś mnie komplementuje.',
+  'Ludzie, którzy ze mną zadzierają, zawsze tego żałują.',
+  'Są rzeczy, które trzeba ukrywać przed innymi ludźmi, ponieważ nie muszą o tym wiedzieć.',
+  'Bywam porównywany do sławnych ludzi.',
+  'Nigdy nie miałem konfliktów z prawem.',
+  'Należy dbać o to, aby moje plany przynosiły korzyści mnie, a nie innym.',
+  'Jestem przeciętną osobą.',
+  'Lubię uprawiać seks z ludźmi, których prawie nie znam.',
+  'Niemal każdym człowiekiem można manipulować.',
+  'Wymagam, aby okazywano mi szacunek, na który zasługuję.',
+  'Powiem wszystko, aby dostać to, czego chcę.'
+];
+
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+const participantId = 'P_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+const group = Math.random() < 0.5 ? 'oczy' : 'neutralne';
+let coinFlips = 0;
+let coinResults = [];
+let coinAccepted = null;
+let coinChoice = null;
+let startTime = Date.now();
+
+const sections = ['sec-welcome','sec-tipi','sec-coin','sec-sd3','sec-extra','sec-demo','sec-debrief','sec-thanks'];
+const sectionProgress = { 'sec-welcome': 0, 'sec-tipi': 15, 'sec-coin': 35, 'sec-sd3': 55, 'sec-extra': 80, 'sec-demo': 90, 'sec-debrief': 97, 'sec-thanks': 100 };
+
+// ══════════════════════════════════════════════
+//  MOBILE BLOCK (hard)
+// ══════════════════════════════════════════════
+function isMobileDevice() {
+  const ua = navigator.userAgent;
+  const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
+  const smallScreen = window.innerWidth < 900;
+  return mobileUA || smallScreen;
+}
+if (isMobileDevice()) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-mobile-block').classList.add('active');
+}
+
+// ══════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════
+// iOS Safari fix: use multiple event types for reliable checkbox detection
+const consentBox = document.getElementById('consent');
+const btnStart = document.getElementById('btnStart');
+function updateConsent() { btnStart.disabled = !consentBox.checked; }
+consentBox.addEventListener('change', updateConsent);
+consentBox.addEventListener('click', updateConsent);
+// Also handle tapping the label text on iOS
+consentBox.closest('label').addEventListener('click', function() {
+  setTimeout(updateConsent, 50);
+});
+
+function buildLikert(containerId, name, count) {
+  const div = document.getElementById(containerId);
+  let html = '<div class="likert">';
+  for (let i = 1; i <= count; i++) {
+    html += `<label><input type="radio" name="${name}" value="${i}"><span class="btn-likert">${i}</span></label>`;
+  }
+  html += '</div>';
+  div.innerHTML = html;
+}
+
+function renderTIPI() {
+  const container = document.getElementById('tipi-items');
+  TIPI_ITEMS.forEach((text, i) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.id = `tipi-q${i+1}`;
+    div.innerHTML = `
+      <p class="q-text"><span class="q-number">${i+1}.</span>${text}</p>
+      <div class="likert" id="tipi-likert-${i+1}">
+        ${[1,2,3,4,5,6,7].map(v => `<label><input type="radio" name="tipi_${i+1}" value="${v}" onchange="markAnswered('tipi-q${i+1}')"><span class="btn-likert">${v}</span></label>`).join('')}
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function renderSD3() {
+  const container = document.getElementById('sd3-items');
+  SD3_ITEMS.forEach((text, i) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.id = `sd3-q${i+1}`;
+    div.innerHTML = `
+      <p class="q-text"><span class="q-number">${i+1}.</span>${text}</p>
+      <div class="likert">
+        ${[1,2,3,4,5].map(v => `<label><input type="radio" name="sd3_${i+1}" value="${v}" onchange="markAnswered('sd3-q${i+1}')"><span class="btn-likert">${v}</span></label>`).join('')}
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function renderDishonesty() {
+  const container = document.getElementById('likert-dishonesty');
+  container.innerHTML = [1,2,3,4,5].map(v =>
+    `<label><input type="radio" name="dishonesty" value="${v}" onchange="markAnswered('q-dishonesty')"><span class="btn-likert">${v}</span></label>`
+  ).join('');
+}
+
+function setupCoinArea() {
+  const area = document.getElementById('coinArea');
+  if (group === 'oczy') {
+    area.classList.add('eyes-bg');
+    const overlay = document.getElementById('eyesOverlay');
+    overlay.style.display = 'block';
+    // Generate scattered eyes SVG
+    let eyesHtml = '';
+    const positions = [
+      {x:10,y:8,s:60,r:-12},{x:55,y:5,s:50,r:8},{x:85,y:12,s:55,r:-5},
+      {x:5,y:35,s:45,r:15},{x:40,y:30,s:65,r:-8},{x:75,y:38,s:50,r:10},
+      {x:20,y:60,s:55,r:-10},{x:60,y:55,s:48,r:5},{x:90,y:62,s:52,r:-15},
+      {x:8,y:82,s:58,r:8},{x:45,y:78,s:42,r:-12},{x:78,y:85,s:60,r:6},
+      {x:30,y:15,s:40,r:3},{x:68,y:70,s:46,r:-7},{x:15,y:50,s:52,r:11}
+    ];
+    positions.forEach(p => {
+      eyesHtml += `<svg class="eye-svg" style="left:${p.x}%;top:${p.y}%;width:${p.s}px;transform:rotate(${p.r}deg)" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="40" cy="20" rx="38" ry="18" fill="none" stroke="#2C2C2C" stroke-width="2.5"/>
+        <circle cx="40" cy="20" r="10" fill="#2C2C2C"/>
+        <circle cx="40" cy="20" r="5" fill="#1a1a1a"/>
+        <ellipse cx="36" cy="16" rx="3" ry="2" fill="#555"/>
+      </svg>`;
+    });
+    overlay.innerHTML = eyesHtml;
+  } else {
+    area.classList.add('neutral-bg');
+  }
+}
+
+renderTIPI();
+renderSD3();
+renderDishonesty();
+setupCoinArea();
+
+// q-lying answered styling
+document.querySelectorAll('input[name="lying"]').forEach(r => {
+  r.addEventListener('change', () => markAnswered('q-lying'));
+});
+
+// ══════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════
+function goTo(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('progressFill').style.width = (sectionProgress[id] || 0) + '%';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function markAnswered(id) {
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('answered'); el.classList.remove('error'); }
+}
+
+// ══════════════════════════════════════════════
+//  VALIDATION
+// ══════════════════════════════════════════════
+function validateSection(prefix) {
+  let count, total;
+  if (prefix === 'tipi') { total = 10; }
+  else if (prefix === 'sd3') { total = 27; }
+
+  let allAnswered = true;
+  for (let i = 1; i <= total; i++) {
+    const val = document.querySelector(`input[name="${prefix}_${i}"]:checked`);
+    const item = document.getElementById(`${prefix}-q${i}`);
+    if (!val) {
+      allAnswered = false;
+      if (item) item.classList.add('error');
+    }
+  }
+  return allAnswered;
+}
+
+function validateAndGo(prefix, nextSection) {
+  const valid = validateSection(prefix);
+  const valMsg = document.getElementById(`${prefix}-val`);
+  if (!valid) {
+    valMsg.classList.add('show');
+    // scroll to first error
+    const firstError = document.querySelector(`#sec-${prefix} .q-item.error`);
+    if (firstError) firstError.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  valMsg.classList.remove('show');
+  goTo(nextSection);
+}
+
+// ══════════════════════════════════════════════
+//  COIN FLIP
+// ══════════════════════════════════════════════
+function enableFlip() {
+  const choice = document.querySelector('input[name="coin_choice"]:checked');
+  const btnFlip = document.getElementById('btnFlip');
+  if (choice) {
+    coinChoice = choice.value;
+    btnFlip.disabled = false;
+    btnFlip.style.opacity = '1';
+  }
+}
+
+function flipCoin() {
+  const coin = document.getElementById('coin');
+  const resultText = document.getElementById('coinResultText');
+  const errorBox = document.getElementById('errorBox');
+  const btnFlip = document.getElementById('btnFlip');
+  const choiceCard = document.getElementById('coinChoiceCard');
+
+  btnFlip.style.display = 'none';
+  choiceCard.style.display = 'none';
+  resultText.classList.remove('visible');
+  errorBox.classList.remove('visible');
+
+  // Remove old animation class
+  coin.classList.remove('flipping', 'flipping-tails');
+  void coin.offsetWidth; // force reflow
+
+  let isHeads;
+  if (coinFlips === 0) {
+    // FIRST FLIP: always opposite of participant's choice
+    isHeads = (coinChoice === 'reszka'); // if they chose reszka → give orzeł, vice versa
+  } else {
+    // SUBSEQUENT FLIPS: truly random
+    isHeads = Math.random() < 0.5;
+  }
+
+  coinFlips++;
+  coinResults.push(isHeads ? 'orzeł' : 'reszka');
+
+  if (isHeads) {
+    coin.classList.add('flipping');
+  } else {
+    coin.classList.add('flipping-tails');
+  }
+
+  setTimeout(() => {
+    resultText.textContent = isHeads ? 'Wynik: Orzeł' : 'Wynik: Reszka';
+    resultText.classList.add('visible');
+
+    setTimeout(() => {
+      errorBox.classList.add('visible');
+    }, 600);
+  }, 1300);
+}
+
+function acceptCoin() {
+  coinAccepted = coinResults[coinResults.length - 1];
+  document.getElementById('errorBox').classList.remove('visible');
+  document.getElementById('btnReflip').style.display = 'none';
+  document.getElementById('coinNext').style.display = 'flex';
+}
+
+// ══════════════════════════════════════════════
+//  SUBMIT
+// ══════════════════════════════════════════════
+function collectData() {
+  const data = {
+    participant_id: participantId,
+    group: group,
+    timestamp: new Date().toISOString(),
+    duration_sec: Math.round((Date.now() - startTime) / 1000),
+    // TIPI
+    ...Object.fromEntries(TIPI_ITEMS.map((_, i) => {
+      const v = document.querySelector(`input[name="tipi_${i+1}"]:checked`);
+      return [`tipi_${i+1}`, v ? v.value : ''];
+    })),
+    // Coin
+    coin_group: group,
+    coin_choice: coinChoice,
+    coin_total_flips: coinFlips,
+    coin_results: coinResults.join(';'),
+    coin_accepted: coinAccepted,
+    coin_reflips: Math.max(0, coinFlips - 1),
+    // SD3
+    ...Object.fromEntries(SD3_ITEMS.map((_, i) => {
+      const v = document.querySelector(`input[name="sd3_${i+1}"]:checked`);
+      return [`sd3_${i+1}`, v ? v.value : ''];
+    })),
+    // Extra
+    dishonesty: (document.querySelector('input[name="dishonesty"]:checked') || {}).value || '',
+    lying: (document.querySelector('input[name="lying"]:checked') || {}).value || '',
+    // Demographics
+    age: document.getElementById('age').value || '',
+    gender: document.getElementById('gender').value || '',
+    education: document.getElementById('education').value || ''
+  };
+  return data;
+}
+
+function validateExtra() {
+  const d = document.querySelector('input[name="dishonesty"]:checked');
+  const l = document.querySelector('input[name="lying"]:checked');
+  if (!d) document.getElementById('q-dishonesty').classList.add('error');
+  if (!l) document.getElementById('q-lying').classList.add('error');
+  if (!d || !l) {
+    document.getElementById('extra-val').classList.add('show');
+    return false;
+  }
+  document.getElementById('extra-val').classList.remove('show');
+  return true;
+}
+
+function validateExtraAndGo() {
+  if (!validateExtra()) return;
+  goTo('sec-demo');
+}
+
+function validateDemo() {
+  const ageEl = document.getElementById('age');
+  const genderEl = document.getElementById('gender');
+  const eduEl = document.getElementById('education');
+  const ageVal = parseInt(ageEl.value, 10);
+  let ok = true;
+  if (!ageVal || ageVal < 18 || ageVal > 100) {
+    document.getElementById('demo-age').classList.add('error'); ok = false;
+  } else {
+    document.getElementById('demo-age').classList.remove('error');
+  }
+  if (!genderEl.value) {
+    document.getElementById('demo-gender').classList.add('error'); ok = false;
+  } else {
+    document.getElementById('demo-gender').classList.remove('error');
+  }
+  if (!eduEl.value) {
+    document.getElementById('demo-edu').classList.add('error'); ok = false;
+  } else {
+    document.getElementById('demo-edu').classList.remove('error');
+  }
+  const msg = document.getElementById('demo-val');
+  if (!ok) { msg.classList.add('show'); } else { msg.classList.remove('show'); }
+  return ok;
+}
+
+function validateDemoAndGo() {
+  if (!validateDemo()) return;
+  goTo('sec-debrief');
+}
+
+function withdrawData() {
+  // Uczestnik nie zgadza się na wykorzystanie danych — nic nie wysyłamy.
+  document.getElementById('thanksIcon').textContent = 'ℹ';
+  document.getElementById('thanksIcon').style.color = 'var(--text-secondary)';
+  document.getElementById('thanksTitle').textContent = 'Twoje dane nie zostały zapisane';
+  document.getElementById('thanksText').innerHTML =
+    'Zgodnie z Twoją decyzją nie zachowujemy żadnych odpowiedzi z tego badania. '+
+    'Dziękujemy za poświęcony czas i&nbsp;za szczery udział w&nbsp;eksperymencie.';
+  goTo('sec-thanks');
+}
+
+async function submitAll() {
+  // Walidacje były już przeprowadzone (extra, demo) przed wejściem na ekran debriefingu.
+  const data = collectData();
+  const overlay = document.getElementById('sendingOverlay');
+  overlay.classList.add('active');
+
+  if (SCRIPT_URL) {
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    } catch (e) {
+      console.warn('Błąd wysyłania:', e);
+    }
+  } else {
+    // FALLBACK (gdy SCRIPT_URL nieustawiony): log do konsoli — uczestnik nic nie pobiera.
+    // PRZED WDROŻENIEM uzupełnij SCRIPT_URL u góry pliku!
+    console.warn('SCRIPT_URL nie jest ustawiony. Dane zalogowane tylko w konsoli przeglądarki:');
+    console.log('DANE BADANIA:', JSON.stringify(data, null, 2));
+  }
+
+  setTimeout(() => {
+    overlay.classList.remove('active');
+    goTo('sec-thanks');
+  }, 1200);
+}
+</script>
+
+</body>
+</html>
