@@ -33,38 +33,23 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* iOS touch fixes */
 label, button, input[type="checkbox"], input[type="radio"] {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 40px 24px 80px;
-}
+.container { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
 
-/* ── Progress bar ── */
 .progress-bar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: var(--border);
-  z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 4px; background: var(--border); z-index: 100;
 }
 .progress-fill {
-  height: 100%;
-  background: var(--accent);
-  transition: width 0.5s ease;
-  width: 0%;
+  height: 100%; background: var(--accent);
+  transition: width 0.5s ease; width: 0%;
 }
 
-/* ── Sections ── */
-.section {
-  display: none;
-  animation: fadeIn 0.4s ease;
-}
+.section { display: none; animation: fadeIn 0.4s ease; }
 .section.active { display: block; }
 
 @keyframes fadeIn {
@@ -72,224 +57,124 @@ label, button, input[type="checkbox"], input[type="radio"] {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Typography ── */
 h1 {
   font-family: 'Source Serif 4', serif;
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--text);
+  font-size: 2rem; font-weight: 600;
+  margin-bottom: 8px; color: var(--text);
 }
 h2 {
   font-family: 'Source Serif 4', serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 16px;
+  font-size: 1.5rem; font-weight: 600; margin-bottom: 16px;
 }
 .subtitle {
   color: var(--text-secondary);
-  font-size: 1.05rem;
-  margin-bottom: 32px;
-  line-height: 1.7;
+  font-size: 1.05rem; margin-bottom: 32px; line-height: 1.7;
 }
 
-/* ── Cards ── */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 28px;
-  margin-bottom: 20px;
+  padding: 28px; margin-bottom: 20px;
   box-shadow: var(--shadow);
 }
 
-/* ── Questionnaire items ── */
 .q-item {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 20px 24px;
-  margin-bottom: 12px;
+  padding: 20px 24px; margin-bottom: 12px;
   transition: border-color 0.2s;
 }
 .q-item.answered { border-color: var(--accent); }
 .q-item.error { border-color: var(--error); }
 
-.q-text {
-  font-size: 0.95rem;
-  margin-bottom: 14px;
-  font-weight: 500;
-}
-.q-number {
-  color: var(--accent);
-  font-weight: 600;
-  margin-right: 6px;
-}
+.q-text { font-size: 0.95rem; margin-bottom: 14px; font-weight: 500; }
+.q-number { color: var(--accent); font-weight: 600; margin-right: 6px; }
 
-/* ── Likert scale ── */
-.likert {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.likert label {
-  flex: 1;
-  min-width: 42px;
-  text-align: center;
-  cursor: pointer;
-}
+.likert { display: flex; gap: 6px; flex-wrap: wrap; }
+.likert label { flex: 1; min-width: 42px; text-align: center; cursor: pointer; }
 .likert input { display: none; }
 .likert .btn-likert {
-  display: block;
-  padding: 8px 4px;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 500;
+  display: block; padding: 8px 4px;
+  border: 2px solid var(--border); border-radius: 8px;
+  font-size: 0.85rem; font-weight: 500;
   transition: all 0.15s;
-  color: var(--text-secondary);
-  background: transparent;
+  color: var(--text-secondary); background: transparent;
 }
 .likert input:checked + .btn-likert {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
+  border-color: var(--accent); background: var(--accent); color: #fff;
 }
-.likert label:hover .btn-likert {
-  border-color: var(--accent);
-}
+.likert label:hover .btn-likert { border-color: var(--accent); }
 
-/* ── Scale labels ── */
 .scale-labels {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  font-style: italic;
+  display: flex; justify-content: space-between;
+  margin-bottom: 10px; font-size: 0.75rem;
+  color: var(--text-secondary); font-style: italic;
 }
 
-/* ── Yes/No ── */
-.yn-group {
-  display: flex;
-  gap: 12px;
-}
-.yn-group label {
-  flex: 1;
-  cursor: pointer;
-}
+.yn-group { display: flex; gap: 12px; }
+.yn-group label { flex: 1; cursor: pointer; }
 .yn-group input { display: none; }
 .yn-btn {
-  display: block;
-  text-align: center;
-  padding: 12px;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: all 0.15s;
+  display: block; text-align: center; padding: 12px;
+  border: 2px solid var(--border); border-radius: 8px;
+  font-size: 1rem; font-weight: 500; transition: all 0.15s;
 }
 .yn-group input:checked + .yn-btn {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
+  border-color: var(--accent); background: var(--accent); color: #fff;
 }
 .yn-group label:hover .yn-btn { border-color: var(--accent); }
 
-/* ── Buttons ── */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 36px;
-  border: none;
-  border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 14px 36px; border: none; border-radius: 8px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
+  font-size: 1rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
 }
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-}
+.btn-primary { background: var(--accent); color: #fff; }
 .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
 .btn-primary:disabled {
-  background: var(--border);
-  color: var(--text-secondary);
-  cursor: not-allowed;
-  transform: none;
+  background: var(--border); color: var(--text-secondary);
+  cursor: not-allowed; transform: none;
 }
 .btn-secondary {
-  background: transparent;
-  color: var(--accent);
+  background: transparent; color: var(--accent);
   border: 2px solid var(--accent);
 }
 .btn-secondary:hover { background: rgba(61,90,128,0.06); }
+.btn-danger {
+  background: transparent; color: var(--error);
+  border: 2px solid var(--error);
+}
+.btn-danger:hover { background: rgba(193,68,75,0.06); }
 
 .btn-row {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 32px;
+  display: flex; justify-content: flex-end;
+  gap: 12px; margin-top: 32px;
 }
+.btn-row.split { justify-content: space-between; flex-wrap: wrap; }
 
-/* ── Coin flip ── */
 .coin-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
-  border-radius: var(--radius);
-  position: relative;
-  min-height: 380px;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 40px 20px; border-radius: var(--radius);
+  position: relative; min-height: 380px;
   transition: background 0.3s;
 }
-
-.coin-area.neutral-bg {
-  background: linear-gradient(135deg, #f0eeeb 0%, #e8e5e0 100%);
-}
-
-.coin-area.eyes-bg {
-  background: linear-gradient(135deg, #f0eeeb 0%, #e8e5e0 100%);
-  position: relative;
-}
+.coin-area.neutral-bg { background: linear-gradient(135deg, #f0eeeb 0%, #e8e5e0 100%); }
+.coin-area.eyes-bg { background: linear-gradient(135deg, #f0eeeb 0%, #e8e5e0 100%); position: relative; }
 
 .eyes-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  border-radius: var(--radius);
-  opacity: 0.08;
+  position: absolute; inset: 0; pointer-events: none;
+  overflow: hidden; border-radius: var(--radius); opacity: 0.08;
 }
+.eye-svg { position: absolute; }
 
-.eye-svg {
-  position: absolute;
-}
-
-.coin-container {
-  width: 140px;
-  height: 140px;
-  perspective: 600px;
-  margin-bottom: 24px;
-}
-
-.coin {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.1s;
-}
-
-.coin.flipping {
-  animation: coinFlip 1.2s ease-out forwards;
-}
-.coin.flipping-tails {
-  animation: coinFlipTails 1.2s ease-out forwards;
-}
+.coin-container { width: 140px; height: 140px; perspective: 600px; margin-bottom: 24px; }
+.coin { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.1s; }
+.coin.flipping { animation: coinFlip 1.2s ease-out forwards; }
+.coin.flipping-tails { animation: coinFlipTails 1.2s ease-out forwards; }
 
 @keyframes coinFlip {
   0% { transform: rotateX(0deg) translateY(0); }
@@ -305,79 +190,48 @@ h2 {
 }
 
 .coin-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  font-weight: 700;
+  position: absolute; width: 100%; height: 100%;
+  border-radius: 50%; display: flex;
+  align-items: center; justify-content: center;
+  font-size: 2.5rem; font-weight: 700;
   font-family: 'Source Serif 4', serif;
   backface-visibility: hidden;
   border: 4px solid rgba(0,0,0,0.1);
 }
-
-.coin-heads {
-  background: linear-gradient(145deg, #FFD700, #DAA520);
-  color: #7B5B00;
-}
-.coin-tails {
-  background: linear-gradient(145deg, #C0C0C0, #A0A0A0);
-  color: #4A4A4A;
-  transform: rotateX(180deg);
-}
+.coin-heads { background: linear-gradient(145deg, #FFD700, #DAA520); color: #7B5B00; }
+.coin-tails { background: linear-gradient(145deg, #C0C0C0, #A0A0A0); color: #4A4A4A; transform: rotateX(180deg); }
 
 .coin-result-text {
   font-family: 'Source Serif 4', serif;
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  opacity: 0;
+  font-size: 1.3rem; font-weight: 600;
+  margin-bottom: 8px; opacity: 0;
   transition: opacity 0.3s;
 }
 .coin-result-text.visible { opacity: 1; }
 
-/* ── Error message (fake) ── */
 .error-box {
   background: #FFF5F5;
   border: 1px solid #FECACA;
   border-left: 4px solid var(--error);
   border-radius: var(--radius);
-  padding: 16px 20px;
-  margin-top: 20px;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  max-width: 460px;
-  opacity: 0;
+  padding: 16px 20px; margin-top: 20px;
+  font-size: 0.9rem; line-height: 1.6;
+  max-width: 460px; opacity: 0;
   transition: opacity 0.4s;
 }
 .error-box.visible { opacity: 1; }
 .error-box strong { color: var(--error); }
 
-.reflip-btn {
-  margin-top: 12px;
-  font-size: 0.85rem;
-  padding: 8px 20px;
-}
+.reflip-btn { margin-top: 12px; font-size: 0.85rem; padding: 8px 20px; }
 
-/* ── Thank you ── */
-.thank-you-icon {
-  font-size: 3rem;
-  margin-bottom: 16px;
-}
+.thank-you-icon { font-size: 3rem; margin-bottom: 16px; }
 
-/* ── Validation ── */
 .validation-msg {
-  color: var(--error);
-  font-size: 0.85rem;
-  margin-top: 8px;
-  display: none;
+  color: var(--error); font-size: 0.85rem;
+  margin-top: 8px; display: none;
 }
 .validation-msg.show { display: block; }
 
-/* ── Responsive ── */
 @media (max-width: 480px) {
   h1 { font-size: 1.5rem; }
   h2 { font-size: 1.2rem; }
@@ -388,7 +242,6 @@ h2 {
   .likert .btn-likert { padding: 6px 2px; font-size: 0.8rem; }
 }
 
-/* ── Loading ── */
 .spinner {
   width: 28px; height: 28px;
   border: 3px solid var(--border);
@@ -400,125 +253,85 @@ h2 {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .sending-overlay {
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background: rgba(250,249,246,0.92);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-  display: none;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 200; display: none;
 }
 .sending-overlay.active { display: flex; }
 
-/* ── Mobile block ── */
+/* Mobile block */
 .mobile-block {
-  display: none;
-  text-align: center;
-  padding: 60px 20px;
+  display: none; min-height: 100vh; padding: 40px 24px;
+  align-items: center; justify-content: center; text-align: center;
 }
-.mobile-block .thank-you-icon { color: var(--error); }
-.mobile-block.active { display: block; }
+.mobile-block.active { display: flex; }
+.mobile-block .icon { font-size: 3rem; margin-bottom: 16px; }
+.mobile-block h1 { font-size: 1.5rem; margin-bottom: 12px; }
+.mobile-block p {
+  color: var(--text-secondary); font-size: 1rem;
+  max-width: 420px; line-height: 1.6; margin: 0 auto;
+}
 
-/* ── Demographics ── */
-.demo-field {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px 24px;
-  margin-bottom: 12px;
+/* Demographics */
+.demo-row { margin-bottom: 18px; }
+.demo-row label.field-label {
+  display: block; font-weight: 500; font-size: 0.95rem; margin-bottom: 8px;
 }
-.demo-field label.field-label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 12px;
-  font-size: 0.95rem;
-}
-.demo-field input[type="number"],
-.demo-field select {
-  width: 100%;
-  padding: 10px 12px;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1rem;
-  background: var(--surface);
-  color: var(--text);
+.demo-row input[type="number"],
+.demo-row select {
+  width: 100%; padding: 12px 14px;
+  border: 2px solid var(--border); border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 1rem;
+  background: var(--surface); color: var(--text);
   transition: border-color 0.15s;
 }
-.demo-field input[type="number"]:focus,
-.demo-field select:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-.demo-field.error { border-color: var(--error); }
+.demo-row input[type="number"]:focus,
+.demo-row select:focus { outline: none; border-color: var(--accent); }
 
-/* ── Debriefing ── */
+/* Debriefing */
+.debrief-text { font-size: 0.97rem; line-height: 1.7; color: var(--text); }
 .debrief-text h3 {
   font-family: 'Source Serif 4', serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 18px 0 10px;
+  font-size: 1.15rem; margin: 20px 0 8px;
   color: var(--accent);
 }
 .debrief-text h3:first-child { margin-top: 0; }
-.debrief-text p { margin-bottom: 12px; font-size: 0.95rem; }
-.debrief-text ul { margin: 0 0 14px 20px; }
-.debrief-text li { margin-bottom: 8px; font-size: 0.95rem; line-height: 1.55; }
+.debrief-text p { margin-bottom: 12px; }
+.debrief-text ul { margin: 8px 0 12px 24px; }
+.debrief-text li { margin-bottom: 6px; }
 .contact-box {
-  background: #F2F5F9;
-  border-left: 4px solid var(--accent);
-  padding: 16px 20px;
-  border-radius: 8px;
-  margin-top: 16px;
-  font-size: 0.92rem;
-  line-height: 1.6;
+  background: #F3F1ED; border-radius: 8px;
+  padding: 14px 18px; margin-top: 16px;
+  font-size: 0.9rem; line-height: 1.6;
 }
-.participant-id-box {
-  background: #FAF8F2;
-  border: 1px dashed var(--border);
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-family: monospace;
-  font-size: 0.9rem;
-  margin-top: 8px;
-  word-break: break-all;
-}
-.btn-row.split { justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.btn-danger {
-  background: transparent;
-  color: var(--error);
-  border: 2px solid var(--error);
-}
-.btn-danger:hover { background: rgba(193,68,75,0.06); }
 </style>
 </head>
 <body>
 
-<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-
-<div class="container">
-
-  <!-- ════════ MOBILE BLOCK ════════ -->
-  <div class="mobile-block" id="sec-mobile-block">
-    <div class="thank-you-icon">⚠</div>
-    <h1>Badanie niedostępne na tym urządzeniu</h1>
-    <p class="subtitle" style="max-width:480px;margin:16px auto 0;">
-      To badanie wymaga komputera stacjonarnego lub laptopa. Procedura nie wyświetla się poprawnie
-      na urządzeniach mobilnych i tabletach.<br><br>
-      Prosimy o&nbsp;otwarcie linku ponownie na komputerze. Dziękujemy za wyrozumiałość.
+<div class="mobile-block" id="mobileBlock">
+  <div>
+    <div class="icon">🖥️</div>
+    <h1>Badanie dostępne tylko na komputerze</h1>
+    <p>
+      Z przyczyn metodologicznych badanie można wykonać wyłącznie na komputerze stacjonarnym lub laptopie.
+      Prosimy o ponowne otwarcie tego linku na większym ekranie.
     </p>
   </div>
+</div>
 
-  <!-- ════════ 0. WELCOME ════════ -->
+<div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="container" id="mainContainer">
+
   <div class="section active" id="sec-welcome">
     <h1>Badanie psychologiczne</h1>
     <p class="subtitle">
-      Dziękujemy za zainteresowanie udziałem w naszym badaniu. Przed Tobą kilka krótkich kwestionariuszy 
+      Dziękujemy za zainteresowanie udziałem w naszym badaniu. Przed Tobą kilka krótkich kwestionariuszy
       oraz proste zadanie. Całość zajmie ok. <strong>8–10 minut</strong>.<br><br>
       <strong>Badanie można wykonać wyłącznie na komputerze stacjonarnym lub laptopie.</strong><br><br>
-      Twoje odpowiedzi są w pełni anonimowe. Nie ma dobrych ani złych odpowiedzi — odpowiadaj zgodnie 
+      Twoje odpowiedzi są w pełni anonimowe. Nie ma dobrych ani złych odpowiedzi — odpowiadaj zgodnie
       z pierwszą myślą, która przyjdzie Ci do głowy. Możesz zrezygnować z&nbsp;udziału w&nbsp;badaniu w&nbsp;każdej chwili.
     </p>
     <div class="card">
@@ -533,7 +346,6 @@ h2 {
     </div>
   </div>
 
-  <!-- ════════ 1. TIPI-PL ════════ -->
   <div class="section" id="sec-tipi">
     <h2>Część 1 — Jak siebie postrzegasz?</h2>
     <p class="subtitle">
@@ -548,7 +360,6 @@ h2 {
     </div>
   </div>
 
-  <!-- ════════ 2. COIN FLIP ════════ -->
   <div class="section" id="sec-coin">
     <h2>Część 2 — Zadanie z monetą</h2>
     <p class="subtitle">
@@ -556,7 +367,6 @@ h2 {
       Najpierw wybierz stronę, a następnie rzuć monetą.
     </p>
 
-    <!-- Step 1: Choose side -->
     <div class="card" id="coinChoiceCard">
       <p style="font-weight:500;margin-bottom:16px;">Wybierz stronę monety:</p>
       <div class="yn-group">
@@ -565,9 +375,7 @@ h2 {
       </div>
     </div>
 
-    <!-- Step 2: Flip area -->
     <div class="coin-area" id="coinArea">
-      <!-- Eyes overlay (only for eyes group) -->
       <div class="eyes-overlay" id="eyesOverlay" style="display:none;"></div>
 
       <div class="coin-container">
@@ -596,7 +404,6 @@ h2 {
     </div>
   </div>
 
-  <!-- ════════ 3. SD3-PL ════════ -->
   <div class="section" id="sec-sd3">
     <h2>Część 3 — Twoje przekonania</h2>
     <p class="subtitle">
@@ -610,7 +417,6 @@ h2 {
     </div>
   </div>
 
-  <!-- ════════ 4 & 5. EXTRA ITEMS ════════ -->
   <div class="section" id="sec-extra">
     <h2>Część 4 — Ostatnie pytania</h2>
 
@@ -634,56 +440,52 @@ h2 {
     </div>
   </div>
 
-  <!-- ════════ 5. DEMOGRAPHICS ════════ -->
   <div class="section" id="sec-demo">
     <h2>Część 5 — Krótka metryczka</h2>
     <p class="subtitle">
-      Na koniec poprosimy o kilka podstawowych informacji. Dane te są wykorzystywane wyłącznie do opisu próby.
+      Na koniec poprosimy o kilka podstawowych informacji. Dane te są wykorzystywane wyłącznie
+      do opisu próby badawczej.
     </p>
 
-    <div class="demo-field" id="demo-age">
-      <label class="field-label" for="age">Wiek (w latach)</label>
-      <input type="number" id="age" min="18" max="100" step="1" placeholder="np. 24" inputmode="numeric">
+    <div class="card">
+      <div class="demo-row">
+        <label class="field-label" for="demo_age">Wiek (w latach)</label>
+        <input type="number" id="demo_age" min="18" max="99" step="1" placeholder="np. 24">
+      </div>
+
+      <div class="demo-row">
+        <label class="field-label" for="demo_gender">Płeć</label>
+        <select id="demo_gender">
+          <option value="">— wybierz —</option>
+          <option value="kobieta">Kobieta</option>
+          <option value="mezczyzna">Mężczyzna</option>
+          <option value="inna">Inna / niebinarna</option>
+          <option value="brak_odp">Wolę nie podawać</option>
+        </select>
+      </div>
+
+      <div class="demo-row">
+        <label class="field-label" for="demo_edu">Najwyższe ukończone wykształcenie</label>
+        <select id="demo_edu">
+          <option value="">— wybierz —</option>
+          <option value="podstawowe">Podstawowe</option>
+          <option value="zawodowe">Zawodowe</option>
+          <option value="srednie">Średnie</option>
+          <option value="licencjat">Wyższe (licencjat / inżynier)</option>
+          <option value="magister">Wyższe (magister)</option>
+          <option value="doktorat">Doktorat lub wyżej</option>
+        </select>
+      </div>
     </div>
 
-    <div class="demo-field" id="demo-gender">
-      <label class="field-label" for="gender">Płeć</label>
-      <select id="gender">
-        <option value="">— wybierz —</option>
-        <option value="kobieta">Kobieta</option>
-        <option value="mężczyzna">Mężczyzna</option>
-        <option value="inna">Inna / niebinarna</option>
-        <option value="brak_odp">Wolę nie podawać</option>
-      </select>
-    </div>
-
-    <div class="demo-field" id="demo-edu">
-      <label class="field-label" for="education">Najwyższe ukończone wykształcenie</label>
-      <select id="education">
-        <option value="">— wybierz —</option>
-        <option value="podstawowe">Podstawowe</option>
-        <option value="zawodowe">Zawodowe</option>
-        <option value="średnie">Średnie</option>
-        <option value="licencjat">Wyższe — licencjat / inżynier</option>
-        <option value="magister">Wyższe — magister</option>
-        <option value="doktorat">Doktorat lub wyżej</option>
-      </select>
-    </div>
-
-    <div class="validation-msg" id="demo-val">Proszę wypełnić wszystkie pola (wiek 18–100).</div>
+    <div class="validation-msg" id="demo-val">Proszę wypełnić wszystkie pola.</div>
     <div class="btn-row">
       <button class="btn btn-primary" onclick="validateDemoAndGo()">Dalej</button>
     </div>
   </div>
 
-  <!-- ════════ 6. DEBRIEFING (przed wysłaniem danych) ════════ -->
   <div class="section" id="sec-debrief">
     <h2>Wyjaśnienie procedury badania</h2>
-    <p class="subtitle">
-      Zanim Twoje odpowiedzi zostaną zapisane, prosimy o zapoznanie się z poniższymi informacjami.
-      Po przeczytaniu zdecyduj, czy zgadzasz się na wykorzystanie swoich danych.
-    </p>
-
     <div class="card">
       <div class="debrief-text">
         <h3>Czego naprawdę dotyczyło badanie</h3>
@@ -699,49 +501,55 @@ h2 {
           <li>
             <strong>Pierwszy rzut monetą był ustawiony.</strong> Został zaprogramowany tak,
             aby zawsze pokazać wynik <em>przeciwny</em> do Twojego wyboru. Kolejne rzuty
-            (jeśli zdecydowałeś/zdecydowałaś się na nie) były już prawdziwie losowe.
+            (jeśli zdecydował_ś się na nie) były już prawdziwie losowe.
           </li>
           <li>
-            <strong>"Błąd techniczny" był pozorny.</strong> Komunikat o błędzie i przycisk
-            "Przerzuć monetę" były celową częścią procedury, a&nbsp;nie usterką. Twoja decyzja —
+            <strong>„Błąd techniczny" był pozorny.</strong> Komunikat o błędzie i przycisk
+            „Przerzuć monetę" były celową częścią procedury, a nie usterką. Twoja decyzja —
             przyjąć pierwszy wynik czy spróbować przerzucić — jest właśnie tym, co badamy.
           </li>
           <li>
-            <strong>Losowy podział na dwie grupy.</strong> Tło ekranu z monetą miało dwie wersje —
-            neutralną oraz z subtelnym wzorem oczu w tle. Sprawdzaliśmy, czy obecność sygnału
-            "bycia obserwowanym" wpływa na zachowania uczestników.
+            <strong>Losowy podział na dwie grupy.</strong> Tło ekranu z monetą miało dwie
+            wersje — neutralną oraz z subtelnym wzorem oczu w tle. Sprawdzaliśmy, czy obecność
+            sygnału „bycia obserwowanym" wpływa na zachowania uczestników.
           </li>
         </ul>
 
         <h3>Dlaczego nie powiedzieliśmy o tym wcześniej</h3>
         <p>
-          Pełne ujawnienie procedury przed badaniem uniemożliwiłoby uzyskanie naturalnej reakcji
-          uczestników. Tego rodzaju zwodzenie (<em>deception</em>) jest dopuszczalne w&nbsp;badaniach
-          psychologicznych pod warunkiem, że nie naraża uczestników na szkodę i jest wyjaśniane
-          w&nbsp;debriefingu — co właśnie robimy.
+          Pełne ujawnienie procedury przed badaniem uniemożliwiłoby uzyskanie naturalnej
+          reakcji uczestników. Tego rodzaju zwodzenie (<em>deception</em>) jest dopuszczalne
+          w badaniach psychologicznych pod warunkiem, że nie naraża uczestników na szkodę i
+          jest wyjaśniane w debriefingu — co właśnie robimy.
         </p>
         <p>
-          Niezależnie od tego, jak postąpiłeś/postąpiłaś w zadaniu z monetą — <strong>żadna decyzja
-          nie była dobra ani zła</strong>. Każdy wynik jest dla nas wartościowy i pozwala lepiej
-          zrozumieć ludzkie decyzje w&nbsp;tego typu sytuacjach.
+          Niezależnie od tego, jak zachował_ś się w zadaniu z monetą — <strong>żadna decyzja
+          nie była dobra ani zła</strong>. Każdy wynik jest dla nas wartościowy i pozwala
+          lepiej zrozumieć ludzkie decyzje w tego typu sytuacjach.
         </p>
 
         <h3>Twoje prawa</h3>
         <p>
-          Twoje odpowiedzi są w pełni anonimowe — nie zbieramy żadnych danych pozwalających na Twoją
-          identyfikację. Po zapoznaniu się z powyższymi informacjami możesz:
+          Twoje odpowiedzi są w pełni anonimowe — nie zbieramy żadnych danych pozwalających
+          na Twoją identyfikację. Po zapoznaniu się z powyższymi informacjami możesz:
         </p>
         <ul>
-          <li><strong>Zgodzić się na wykorzystanie swoich danych</strong> — Twoje odpowiedzi zostaną zapisane i wykorzystane w&nbsp;analizach naukowych.</li>
-          <li><strong>Wycofać swoje dane</strong> — Twoje odpowiedzi nie zostaną zapisane ani wykorzystane.</li>
+          <li>
+            <strong>Zgodzić się na wykorzystanie swoich danych</strong> — Twoje odpowiedzi
+            zostaną zapisane i wykorzystane w analizach naukowych.
+          </li>
+          <li>
+            <strong>Wycofać swoje dane</strong> — Twoje odpowiedzi zostaną odrzucone i nie
+            będą uwzględnione w badaniu.
+          </li>
         </ul>
 
         <div class="contact-box">
           <strong>Kontakt:</strong> W razie pytań dotyczących badania możesz skontaktować się
-          z osobą prowadzącą: dr Jakub Kuś, Wydział Psychologii, Uniwersytet SWPS we Wrocławiu —
+          z osobą prowadzącą: dr Jakub Kuś, Wydział Psychologii w Wrocławiu, Uniwersytet SWPS —
           <a href="mailto:jkus@swps.edu.pl">jkus@swps.edu.pl</a>.<br><br>
-          Jeśli udział w&nbsp;badaniu wzbudził w&nbsp;Tobie jakikolwiek dyskomfort, zachęcamy do kontaktu
-          z&nbsp;osobą prowadzącą lub skorzystania z konsultacji psychologicznej dostępnej w&nbsp;Twojej
+          Jeśli udział w badaniu wzbudził w Tobie jakikolwiek dyskomfort, zachęcamy do kontaktu
+          z osobą prowadzącą lub skorzystania z konsultacji psychologicznej dostępnej w Twojej
           instytucji.
         </div>
       </div>
@@ -753,24 +561,20 @@ h2 {
     </div>
   </div>
 
-  <!-- ════════ THANK YOU ════════ -->
   <div class="section" id="sec-thanks">
     <div style="text-align:center;padding:60px 0;">
       <div class="thank-you-icon" id="thanksIcon">✓</div>
       <h1 id="thanksTitle">Dziękujemy za udział!</h1>
-      <p class="subtitle" style="max-width:520px;margin:16px auto 0;" id="thanksText">
-        Twoje odpowiedzi zostały zapisane. Możesz zamknąć tę stronę.
-      </p>
-      <p style="max-width:520px;margin:8px auto 0;font-size:0.88rem;color:var(--text-secondary);">
-        W razie pytań dotyczących badania skontaktuj się z&nbsp;osobą prowadzącą:
-        dr Jakub Kuś — <a href="mailto:jkus@swps.edu.pl">jkus@swps.edu.pl</a>.
+      <p class="subtitle" style="max-width:480px;margin:16px auto 0;" id="thanksText">
+        Twoje odpowiedzi zostały zapisane. Możesz zamknąć tę stronę.<br><br>
+        <em style="font-size:0.9rem;">W razie pytań dotyczących badania skontaktuj się
+        z&nbsp;osobą prowadzącą: dr Jakub Kuś — <a href="mailto:jkus@swps.edu.pl">jkus@swps.edu.pl</a>.</em>
       </p>
     </div>
   </div>
 
 </div>
 
-<!-- Sending overlay -->
 <div class="sending-overlay" id="sendingOverlay">
   <div class="spinner"></div>
   <p style="font-weight:500;">Zapisywanie odpowiedzi…</p>
@@ -779,10 +583,25 @@ h2 {
 <script>
 // ══════════════════════════════════════════════
 //  CONFIG
-//  ⚠ PRZED WDROŻENIEM: wklej URL Twojego Google Apps Script Web App.
-//  Bez tego dane będą tylko logowane w konsoli przeglądarki (FALLBACK).
+//  ⚠ PRZED WDROŻENIEM: wklej URL Google Apps Script Web App poniżej.
+//  Dopóki SCRIPT_URL jest pusty, dane zapisują się tylko lokalnie u uczestnika (fallback JSON).
 // ══════════════════════════════════════════════
-const SCRIPT_URL = ''; // ← np. 'https://script.google.com/macros/s/AKfycbxU2R2thlkcUTbo8L8MzZQ4QLrB92_TdsUgf6RKpVFrnmurzHLW87RUh1EwSvxdExvC/exec'
+const SCRIPT_URL = ''; // np. 'https://script.google.com/macros/s/AKfycby5YIfcU7hUo5CQvoFSWAYufu3hbrb_yRVwwtTAeTXji2tiILQKdv3kEuAgsLeJgLo37w/exec'
+
+// ══════════════════════════════════════════════
+//  MOBILE DETECTION (hard block)
+// ══════════════════════════════════════════════
+(function () {
+  const ua = navigator.userAgent.toLowerCase();
+  const mobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(ua);
+  const smallScreen = window.innerWidth < 900;
+  const touchOnly = ('ontouchstart' in window) && !window.matchMedia('(pointer:fine)').matches;
+  if (mobileUA || smallScreen || touchOnly) {
+    document.getElementById('mobileBlock').classList.add('active');
+    document.getElementById('mainContainer').style.display = 'none';
+    document.getElementById('progressBar').style.display = 'none';
+  }
+})();
 
 // ══════════════════════════════════════════════
 //  DATA
@@ -841,46 +660,26 @@ let coinAccepted = null;
 let coinChoice = null;
 let startTime = Date.now();
 
-const sections = ['sec-welcome','sec-tipi','sec-coin','sec-sd3','sec-extra','sec-demo','sec-debrief','sec-thanks'];
-const sectionProgress = { 'sec-welcome': 0, 'sec-tipi': 15, 'sec-coin': 35, 'sec-sd3': 55, 'sec-extra': 80, 'sec-demo': 90, 'sec-debrief': 97, 'sec-thanks': 100 };
-
-// ══════════════════════════════════════════════
-//  MOBILE BLOCK (hard)
-// ══════════════════════════════════════════════
-function isMobileDevice() {
-  const ua = navigator.userAgent;
-  const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua);
-  const smallScreen = window.innerWidth < 900;
-  return mobileUA || smallScreen;
-}
-if (isMobileDevice()) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById('sec-mobile-block').classList.add('active');
-}
+const sectionProgress = {
+  'sec-welcome': 0,
+  'sec-tipi': 15,
+  'sec-coin': 35,
+  'sec-sd3': 55,
+  'sec-extra': 78,
+  'sec-demo': 88,
+  'sec-debrief': 95,
+  'sec-thanks': 100
+};
 
 // ══════════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════════
-// iOS Safari fix: use multiple event types for reliable checkbox detection
 const consentBox = document.getElementById('consent');
 const btnStart = document.getElementById('btnStart');
 function updateConsent() { btnStart.disabled = !consentBox.checked; }
 consentBox.addEventListener('change', updateConsent);
 consentBox.addEventListener('click', updateConsent);
-// Also handle tapping the label text on iOS
-consentBox.closest('label').addEventListener('click', function() {
-  setTimeout(updateConsent, 50);
-});
-
-function buildLikert(containerId, name, count) {
-  const div = document.getElementById(containerId);
-  let html = '<div class="likert">';
-  for (let i = 1; i <= count; i++) {
-    html += `<label><input type="radio" name="${name}" value="${i}"><span class="btn-likert">${i}</span></label>`;
-  }
-  html += '</div>';
-  div.innerHTML = html;
-}
+consentBox.closest('label').addEventListener('click', function () { setTimeout(updateConsent, 50); });
 
 function renderTIPI() {
   const container = document.getElementById('tipi-items');
@@ -925,7 +724,6 @@ function setupCoinArea() {
     area.classList.add('eyes-bg');
     const overlay = document.getElementById('eyesOverlay');
     overlay.style.display = 'block';
-    // Generate scattered eyes SVG
     let eyesHtml = '';
     const positions = [
       {x:10,y:8,s:60,r:-12},{x:55,y:5,s:50,r:8},{x:85,y:12,s:55,r:-5},
@@ -953,7 +751,6 @@ renderSD3();
 renderDishonesty();
 setupCoinArea();
 
-// q-lying answered styling
 document.querySelectorAll('input[name="lying"]').forEach(r => {
   r.addEventListener('change', () => markAnswered('q-lying'));
 });
@@ -977,9 +774,10 @@ function markAnswered(id) {
 //  VALIDATION
 // ══════════════════════════════════════════════
 function validateSection(prefix) {
-  let count, total;
-  if (prefix === 'tipi') { total = 10; }
-  else if (prefix === 'sd3') { total = 27; }
+  let total;
+  if (prefix === 'tipi') total = 10;
+  else if (prefix === 'sd3') total = 27;
+  else return true;
 
   let allAnswered = true;
   for (let i = 1; i <= total; i++) {
@@ -998,13 +796,47 @@ function validateAndGo(prefix, nextSection) {
   const valMsg = document.getElementById(`${prefix}-val`);
   if (!valid) {
     valMsg.classList.add('show');
-    // scroll to first error
     const firstError = document.querySelector(`#sec-${prefix} .q-item.error`);
     if (firstError) firstError.scrollIntoView({behavior:'smooth', block:'center'});
     return;
   }
   valMsg.classList.remove('show');
   goTo(nextSection);
+}
+
+function validateExtra() {
+  const d = document.querySelector('input[name="dishonesty"]:checked');
+  const l = document.querySelector('input[name="lying"]:checked');
+  if (!d) document.getElementById('q-dishonesty').classList.add('error');
+  if (!l) document.getElementById('q-lying').classList.add('error');
+  if (!d || !l) {
+    document.getElementById('extra-val').classList.add('show');
+    return false;
+  }
+  document.getElementById('extra-val').classList.remove('show');
+  return true;
+}
+
+function validateExtraAndGo() {
+  if (!validateExtra()) return;
+  goTo('sec-demo');
+}
+
+function validateDemoAndGo() {
+  const age = document.getElementById('demo_age').value;
+  const gender = document.getElementById('demo_gender').value;
+  const edu = document.getElementById('demo_edu').value;
+  const valMsg = document.getElementById('demo-val');
+
+  const ageNum = parseInt(age, 10);
+  const ageOk = age !== '' && !isNaN(ageNum) && ageNum >= 18 && ageNum <= 99;
+
+  if (!ageOk || !gender || !edu) {
+    valMsg.classList.add('show');
+    return;
+  }
+  valMsg.classList.remove('show');
+  goTo('sec-debrief');
 }
 
 // ══════════════════════════════════════════════
@@ -1032,35 +864,28 @@ function flipCoin() {
   resultText.classList.remove('visible');
   errorBox.classList.remove('visible');
 
-  // Remove old animation class
   coin.classList.remove('flipping', 'flipping-tails');
-  void coin.offsetWidth; // force reflow
+  void coin.offsetWidth;
 
   let isHeads;
   if (coinFlips === 0) {
-    // FIRST FLIP: always opposite of participant's choice
-    isHeads = (coinChoice === 'reszka'); // if they chose reszka → give orzeł, vice versa
+    // PIERWSZY RZUT: zawsze przeciwny do wyboru uczestnika
+    isHeads = (coinChoice === 'reszka');
   } else {
-    // SUBSEQUENT FLIPS: truly random
+    // Kolejne rzuty: losowe
     isHeads = Math.random() < 0.5;
   }
 
   coinFlips++;
   coinResults.push(isHeads ? 'orzeł' : 'reszka');
 
-  if (isHeads) {
-    coin.classList.add('flipping');
-  } else {
-    coin.classList.add('flipping-tails');
-  }
+  if (isHeads) coin.classList.add('flipping');
+  else coin.classList.add('flipping-tails');
 
   setTimeout(() => {
     resultText.textContent = isHeads ? 'Wynik: Orzeł' : 'Wynik: Reszka';
     resultText.classList.add('visible');
-
-    setTimeout(() => {
-      errorBox.classList.add('visible');
-    }, 600);
+    setTimeout(() => { errorBox.classList.add('visible'); }, 600);
   }, 1300);
 }
 
@@ -1072,6 +897,27 @@ function acceptCoin() {
 }
 
 // ══════════════════════════════════════════════
+//  DEBRIEFING — WITHDRAW DATA
+// ══════════════════════════════════════════════
+function withdrawData() {
+  const confirmed = confirm(
+    'Czy na pewno chcesz wycofać swoje dane?\n\n' +
+    'Twoje odpowiedzi zostaną odrzucone i nie będą wykorzystane w badaniu. ' +
+    'Tej decyzji nie da się cofnąć.'
+  );
+  if (!confirmed) return;
+
+  document.getElementById('thanksIcon').textContent = '✕';
+  document.getElementById('thanksTitle').textContent = 'Dane zostały wycofane';
+  document.getElementById('thanksText').innerHTML =
+    'Twoje odpowiedzi nie zostały zapisane i nie będą wykorzystane w badaniu.<br><br>' +
+    'Dziękujemy za poświęcony czas. Możesz zamknąć tę stronę.<br><br>' +
+    '<em style="font-size:0.9rem;">W razie pytań skontaktuj się z osobą prowadzącą: ' +
+    'dr Jakub Kuś — <a href="mailto:jkus@swps.edu.pl">jkus@swps.edu.pl</a>.</em>';
+  goTo('sec-thanks');
+}
+
+// ══════════════════════════════════════════════
 //  SUBMIT
 // ══════════════════════════════════════════════
 function collectData() {
@@ -1080,6 +926,11 @@ function collectData() {
     group: group,
     timestamp: new Date().toISOString(),
     duration_sec: Math.round((Date.now() - startTime) / 1000),
+    debrief_consent: 'tak',
+    // Demographics
+    age: document.getElementById('demo_age').value,
+    gender: document.getElementById('demo_gender').value,
+    education: document.getElementById('demo_edu').value,
     // TIPI
     ...Object.fromEntries(TIPI_ITEMS.map((_, i) => {
       const v = document.querySelector(`input[name="tipi_${i+1}"]:checked`);
@@ -1099,97 +950,36 @@ function collectData() {
     })),
     // Extra
     dishonesty: (document.querySelector('input[name="dishonesty"]:checked') || {}).value || '',
-    lying: (document.querySelector('input[name="lying"]:checked') || {}).value || '',
-    // Demographics
-    age: document.getElementById('age').value || '',
-    gender: document.getElementById('gender').value || '',
-    education: document.getElementById('education').value || ''
+    lying: (document.querySelector('input[name="lying"]:checked') || {}).value || ''
   };
   return data;
 }
 
-function validateExtra() {
-  const d = document.querySelector('input[name="dishonesty"]:checked');
-  const l = document.querySelector('input[name="lying"]:checked');
-  if (!d) document.getElementById('q-dishonesty').classList.add('error');
-  if (!l) document.getElementById('q-lying').classList.add('error');
-  if (!d || !l) {
-    document.getElementById('extra-val').classList.add('show');
-    return false;
-  }
-  document.getElementById('extra-val').classList.remove('show');
-  return true;
-}
-
-function validateExtraAndGo() {
-  if (!validateExtra()) return;
-  goTo('sec-demo');
-}
-
-function validateDemo() {
-  const ageEl = document.getElementById('age');
-  const genderEl = document.getElementById('gender');
-  const eduEl = document.getElementById('education');
-  const ageVal = parseInt(ageEl.value, 10);
-  let ok = true;
-  if (!ageVal || ageVal < 18 || ageVal > 100) {
-    document.getElementById('demo-age').classList.add('error'); ok = false;
-  } else {
-    document.getElementById('demo-age').classList.remove('error');
-  }
-  if (!genderEl.value) {
-    document.getElementById('demo-gender').classList.add('error'); ok = false;
-  } else {
-    document.getElementById('demo-gender').classList.remove('error');
-  }
-  if (!eduEl.value) {
-    document.getElementById('demo-edu').classList.add('error'); ok = false;
-  } else {
-    document.getElementById('demo-edu').classList.remove('error');
-  }
-  const msg = document.getElementById('demo-val');
-  if (!ok) { msg.classList.add('show'); } else { msg.classList.remove('show'); }
-  return ok;
-}
-
-function validateDemoAndGo() {
-  if (!validateDemo()) return;
-  goTo('sec-debrief');
-}
-
-function withdrawData() {
-  // Uczestnik nie zgadza się na wykorzystanie danych — nic nie wysyłamy.
-  document.getElementById('thanksIcon').textContent = 'ℹ';
-  document.getElementById('thanksIcon').style.color = 'var(--text-secondary)';
-  document.getElementById('thanksTitle').textContent = 'Twoje dane nie zostały zapisane';
-  document.getElementById('thanksText').innerHTML =
-    'Zgodnie z Twoją decyzją nie zachowujemy żadnych odpowiedzi z tego badania. '+
-    'Dziękujemy za poświęcony czas i&nbsp;za szczery udział w&nbsp;eksperymencie.';
-  goTo('sec-thanks');
-}
-
 async function submitAll() {
-  // Walidacje były już przeprowadzone (extra, demo) przed wejściem na ekran debriefingu.
   const data = collectData();
   const overlay = document.getElementById('sendingOverlay');
   overlay.classList.add('active');
 
   if (SCRIPT_URL) {
     try {
+      // text/plain unika preflight CORS przy zapisie do Google Apps Script
       await fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(data)
       });
     } catch (e) {
       console.warn('Błąd wysyłania:', e);
     }
   } else {
-    // FALLBACK (gdy SCRIPT_URL nieustawiony): log do konsoli — uczestnik nic nie pobiera.
-    // PRZED WDROŻENIEM uzupełnij SCRIPT_URL u góry pliku!
-    console.warn('SCRIPT_URL nie jest ustawiony. Dane zalogowane tylko w konsoli przeglądarki:');
+    // Fallback (gdy SCRIPT_URL nie jest jeszcze ustawiony)
     console.log('DANE BADANIA:', JSON.stringify(data, null, 2));
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `wyniki_${participantId}.json`;
+    a.click();
   }
 
   setTimeout(() => {
